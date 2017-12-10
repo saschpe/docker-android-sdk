@@ -1,0 +1,55 @@
+#!/bin/bash
+#
+# Script to build transpiler Docker image.
+#
+# Needs root privileges or 'docker' group membership
+
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. "${SCRIPT_DIR}/../inc.constants"
+. "${SCRIPT_DIR}/../inc.functions"
+
+
+# Default values
+DEFAULT_ANDROID_API=27
+
+
+# Functions
+function usage {
+    echo -e "Usage: ${0} [OPTIONS]"
+    echo -e "Options:"
+    echo -e "  --android-api API_LEVEL\t(default: ${DEFAULT_ANDROID_API})"
+    exit 1
+}
+
+
+# Command-line arguments
+android_api=${DEFAULT_ANDROID_API}
+while [[ $# -gt 0 ]] ; do
+    key="$1"
+    case $key in
+    --android-api)
+        android_api="$2"
+        shift # past argument
+        ;;
+    -h|--help)
+        usage
+        shift # past argument
+        ;;
+    *) # unknown option
+        ;;
+    esac
+    shift # past argument or value
+done
+
+
+# Let's roll
+safe docker build \
+    --build-arg android_api=${android_api} \
+    -t ${DOCKER_IMAGE}:${android_api} \
+    .
+
+if [ ${android_api} -ge ${DEFAULT_ANDROID_API} ] ; then
+    safe docker tag \
+        ${DOCKER_IMAGE}:${android_api} \
+        ${DOCKER_IMAGE}:latest
+fi
