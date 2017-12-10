@@ -1,6 +1,21 @@
 # Android SDK
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
+Android SKD Docker container.
+
+## Scripts
+These scripts simplify various tasks related to container building and
+publishing.
+
+    .
+    └─── scripts
+        ├── docker
+        │   ├── build           Build the container locally
+        │   └── run             Run the container locally
+        ├── inc.constants
+        └── inc.functions
+
+
 ## License
 
     Copyright 2017 Sascha Peilicke
