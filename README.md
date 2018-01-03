@@ -4,7 +4,7 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/saschpe/android-sdk.svg)]()
 [![Docker Build Status](https://img.shields.io/docker/build/saschpe/android-sdk.svg)]()
 
-Android SKD Docker container.
+Android SKD Docker container based on Alpine Linux.
 
 
 ## Usage
