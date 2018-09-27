@@ -12,7 +12,7 @@ ENV GLIBC 2.25-r0
 ENV PATH $PATH:$ANDROID_SDK_ROOT/tools/bin
 
 RUN apk add --no-cache --virtual=.build-dependencies wget unzip \
-	&& wget https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub -O /etc/apk/keys/sgerrand.rsa.pub \
+	&& wget https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub -O /etc/apk/keys/sgerrand.rsa.pub \
 	&& wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC}/glibc-${GLIBC}.apk -O /tmp/glibc.apk \
 	&& wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC}/glibc-bin-${GLIBC}.apk -O /tmp/glibc-bin.apk \
 	&& apk add --no-cache /tmp/glibc.apk /tmp/glibc-bin.apk \
