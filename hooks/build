@@ -1,0 +1,9 @@
+#!/bin/bash
+
+for api_level in ${ANDROID_API[*]} ; do
+    for build_tools in ${ANDROID_BUILD_TOOLS[*]} ; do
+        ./scripts/docker/build \
+            --android-api ${api_level} \
+            --android-build-tools ${build_tools}
+    done
+done

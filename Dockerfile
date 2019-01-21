@@ -4,7 +4,7 @@ LABEL maintainer="Sascha Peilicke <sascha@peilicke.de"
 ARG android_api=28
 ARG android_build_tools=28.0.3
 
-LABEL description="Android SDK ${android_api}"
+LABEL description="Android SDK ${android_api} with build-tools ${android_build_tools}"
 
 ENV ANDROID_SDK_ROOT /opt/android-sdk-linux
 ENV ANDROID_HOME $ANDROID_SDK_ROOT

@@ -11,6 +11,7 @@ SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # Default values
 DEFAULT_ANDROID_API=28
+DEFAULT_ANDROID_BUILD_TOOLS=28.0.3
 
 
 # Functions
@@ -18,17 +19,23 @@ function usage {
     echo -e "Usage: ${0} [OPTIONS]"
     echo -e "Options:"
     echo -e "  --android-api API_LEVEL\t(default: ${DEFAULT_ANDROID_API})"
+    echo -e "  --android-build-tools BUILD_TOOLS_VERSION\t(default: ${DEFAULT_ANDROID_BUILD_TOOLS})"
     exit 1
 }
 
 
 # Command-line arguments
 android_api=${DEFAULT_ANDROID_API}
+android_build_tools=${DEFAULT_ANDROID_BUILD_TOOLS}
 while [[ $# -gt 0 ]] ; do
     key="$1"
     case $key in
     --android-api)
         android_api="$2"
+        shift # past argument
+        ;;
+    --android-build-tools)
+        android_build_tools="$2"
         shift # past argument
         ;;
     -h|--help)
@@ -43,13 +50,17 @@ done
 
 
 # Let's roll
+image_tag=${android_api}_${android_build_tools}
+
 safe docker build \
     --build-arg android_api=${android_api} \
-    -t ${DOCKER_IMAGE}:${android_api} \
+    --build-arg android_build_tools=${android_build_tools} \
+    -t ${DOCKER_IMAGE}:${image_tag} \
     .
 
-if [ ${android_api} -ge ${DEFAULT_ANDROID_API} ] ; then
+if [ ${android_api} -eq ${DEFAULT_ANDROID_API} -a \
+     ${android_build_tools} = ${DEFAULT_ANDROID_BUILD_TOOLS} ]; then
     safe docker tag \
-        ${DOCKER_IMAGE}:${android_api} \
+        ${DOCKER_IMAGE}:${image_tag} \
         ${DOCKER_IMAGE}:latest
 fi
