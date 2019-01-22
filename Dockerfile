@@ -12,21 +12,20 @@ ENV GLIBC 2.25-r0
 ENV PATH $PATH:$ANDROID_SDK_ROOT/tools/bin
 
 RUN apk add --no-cache --virtual=.build-dependencies wget unzip \
-	&& wget https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub -O /etc/apk/keys/sgerrand.rsa.pub \
-	&& wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC}/glibc-${GLIBC}.apk -O /tmp/glibc.apk \
-	&& wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC}/glibc-bin-${GLIBC}.apk -O /tmp/glibc-bin.apk \
-	&& apk add --no-cache /tmp/glibc.apk /tmp/glibc-bin.apk \
-	&& rm -rf /tmp/* /var/cache/apk/*
-RUN wget https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip -O /tmp/tools.zip \
-	&& mkdir -p $ANDROID_SDK_ROOT \
-    && unzip /tmp/tools.zip -d $ANDROID_SDK_ROOT \
-    && rm -v /tmp/tools.zip
-RUN yes | sdkmanager --licenses \
-	&& mkdir -p /root/.android/ \
-	&& touch /root/.android/repositories.cfg \
-    && sdkmanager \
+    && wget --quiet https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub -O /etc/apk/keys/sgerrand.rsa.pub \
+    && wget --quiet https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC}/glibc-${GLIBC}.apk -O /tmp/glibc.apk \
+    && wget --quiet https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC}/glibc-bin-${GLIBC}.apk -O /tmp/glibc-bin.apk \
+    && apk add --no-cache /tmp/glibc.apk /tmp/glibc-bin.apk \
+    && rm -rf /tmp/* /var/cache/apk/*
+RUN wget --quiet https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -O /tmp/tools.zip \
+    && mkdir -p $ANDROID_SDK_ROOT \
+    && unzip -q /tmp/tools.zip -d $ANDROID_SDK_ROOT \
+    && rm -v /tmp/tools.zip \
+    && mkdir -p /root/.android/ \
+    && touch /root/.android/repositories.cfg
+RUN yes | sdkmanager \
         "build-tools;${android_build_tools}" \
-        "platforms;android-${android_api}" \
+        "platforms;android-${android_api}" >/dev/null \
     && rm -rf  \
         # Delete proguard docs and examples
         $ANDROID_SDK_ROOT/tools/proguard/examples \
