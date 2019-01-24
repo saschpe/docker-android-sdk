@@ -10,8 +10,8 @@ SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 
 # Default values
-DEFAULT_ANDROID_API=28
-DEFAULT_ANDROID_BUILD_TOOLS=28.0.3
+DEFAULT_ANDROID_API=$(grep android_api= "${SCRIPT_DIR}/../../Dockerfile" | cut -d"=" -f2)
+DEFAULT_ANDROID_BUILD_TOOLS=$(grep android_build_tools= "${SCRIPT_DIR}/../../Dockerfile" | cut -d"=" -f2)
 
 
 # Functions
@@ -57,6 +57,7 @@ done
 # Let's roll
 image_tag=${android_api}_${android_build_tools}
 
+echo "Building image tag ${image_tag}..."
 safe docker build \
     --build-arg android_api=${android_api} \
     --build-arg android_build_tools=${android_build_tools} \
@@ -68,6 +69,7 @@ fi
 # Update 'latest' tag if script argument match defaults
 if [ ${android_api} -eq ${DEFAULT_ANDROID_API} -a \
      ${android_build_tools} = ${DEFAULT_ANDROID_BUILD_TOOLS} ]; then
+    echo "Tagging as 'latest'..."
     safe docker tag ${DOCKER_IMAGE}:${image_tag} ${DOCKER_IMAGE}:latest
     if [ ${docker_push} ] ; then
         safe docker push ${DOCKER_IMAGE}:latest
