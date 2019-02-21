@@ -1,4 +1,4 @@
-FROM openjdk:8-alpine
+FROM openjdk:8-alpine3.9
 LABEL maintainer="Sascha Peilicke <sascha@peilicke.de"
 
 ARG android_api=28
