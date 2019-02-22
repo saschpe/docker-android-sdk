@@ -13,6 +13,7 @@ ENV PATH $PATH:$ANDROID_SDK_ROOT/tools/bin
 
 RUN apk add --no-cache --virtual=.build-dependencies \
         bash \
+        file \
         git \
         openssl \
         wget \
