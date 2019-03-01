@@ -15,6 +15,7 @@ RUN apk add --no-cache --virtual=.build-dependencies \
         bash \
         file \
         git \
+        git-lfs \
         openssl \
         wget \
         unzip \
