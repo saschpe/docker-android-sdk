@@ -1,8 +1,8 @@
 FROM openjdk:8-alpine3.9
 LABEL maintainer="Sascha Peilicke <sascha@peilicke.de"
 
-ARG android_api=28
-ARG android_build_tools=28.0.3
+ARG android_api=29
+ARG android_build_tools=29.0.2
 
 LABEL description="Android SDK ${android_api} with build-tools ${android_build_tools}"
 
