@@ -13,5 +13,5 @@ docker pull ${DOCKER_IMAGE}:latest
 
 # Run container
 safe docker run \
-    --rm \
-    ${DOCKER_IMAGE}:latest
+  --rm \
+  ${DOCKER_IMAGE}:latest
