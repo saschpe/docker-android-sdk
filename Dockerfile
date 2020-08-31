@@ -15,9 +15,7 @@ ARG jdk=11
 
 # Stage 1, build container
 FROM openjdk:8-alpine3.9 AS Build
-
 ENV ANDROID_SDK_ROOT /opt/android-sdk-linux
-
 RUN apk add --no-cache wget unzip; \
     rm -rf /var/cache/apk/*
 RUN wget --quiet https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -O /tmp/tools.zip \
@@ -28,25 +26,19 @@ RUN wget --quiet https://dl.google.com/android/repository/sdk-tools-linux-433379
     touch /root/.android/repositories.cfg; \
     yes | ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager "cmdline-tools;latest" >/dev/null
 
-
 # Stage 2, distribution container
-
 FROM openjdk:${jdk}-slim
 ARG android_api=29
 ARG android_build_tools=30.0.1
 LABEL maintainer="Sascha Peilicke <sascha@peilicke.de"
 LABEL description="Android SDK ${android_api} with build-tools ${android_build_tools} using JDK ${jdk}"
-
 ENV ANDROID_SDK_ROOT /opt/android-sdk-linux
 ENV PATH $PATH:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin
-
 RUN apt-get update; \
 	apt-get install -y --no-install-recommends \
 		git \
 		git-lfs \
-		openssl \
-	; \
-	rm -rf /var/lib/apt/lists/*
+		openssl
 COPY --from=BUILD ${ANDROID_SDK_ROOT} ${ANDROID_SDK_ROOT}
 RUN yes | sdkmanager --licenses >/dev/null; \
     sdkmanager \
