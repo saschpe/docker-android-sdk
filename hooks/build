@@ -5,9 +5,12 @@
 
 for api_level in ${ANDROID_API[*]} ; do
   for build_tools in ${ANDROID_BUILD_TOOLS[*]} ; do
-    ./scripts/docker/build \
-      --android-api ${api_level} \
-      --android-build-tools ${build_tools} \
-      --docker-push
+    for jdk in ${JDK[*]} ; do
+      ./scripts/docker/build \
+        --android-api ${api_level} \
+        --android-build-tools ${build_tools} \
+        --jdk ${jdk} \
+        --docker-push
+    done
   done
 done

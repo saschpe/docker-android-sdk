@@ -1,4 +1,4 @@
-# 
+#
 # Android SDK container image with build-tools.
 #
 # Contains JDK, Android SDK and Android Build Tools. Each version is
@@ -28,8 +28,8 @@ RUN wget --quiet https://dl.google.com/android/repository/sdk-tools-linux-433379
 
 # Stage 2, distribution container
 FROM openjdk:${jdk}-slim
-ARG android_api=29
-ARG android_build_tools=30.0.1
+ARG android_api=30
+ARG android_build_tools=30.0.3
 LABEL maintainer="Sascha Peilicke <sascha@peilicke.de"
 LABEL description="Android SDK ${android_api} with build-tools ${android_build_tools} using JDK ${jdk}"
 ENV ANDROID_SDK_ROOT /opt/android-sdk-linux
