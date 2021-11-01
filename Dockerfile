@@ -41,8 +41,9 @@ RUN apt-get update; \
 		openssl
 COPY --from=BUILD ${ANDROID_SDK_ROOT} ${ANDROID_SDK_ROOT}
 RUN yes | sdkmanager --licenses >/dev/null; \
-    sdkmanager \
+    sdkmanager --install \
         "build-tools;${android_build_tools}" \
-        "platforms;android-${android_api}"; \
+        "platforms;android-${android_api}" \
+        "platform-tools"; \
     sdkmanager --list | sed -e '/^$/q'; \
     java -version
