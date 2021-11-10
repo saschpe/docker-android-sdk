@@ -61,7 +61,7 @@ done
 
 
 # Let's roll
-image_tag=jdk${jdk}_api${android_api}_${android_build_tools}
+image_tag=${android_api}_${android_build_tools}_jdk${jdk}
 
 approve "Building image tag ${image_tag}..."
 safe docker build \
@@ -71,15 +71,4 @@ safe docker build \
   --tag ${DOCKER_IMAGE}:${image_tag} .
 if [ ${docker_push} ] ; then
   safe docker push ${DOCKER_IMAGE}:${image_tag}
-fi
-
-# Update 'latest' tag if script argument match defaults
-if [ ${android_api} -eq ${DEFAULT_ANDROID_API} -a \
-     ${android_build_tools} = ${DEFAULT_ANDROID_BUILD_TOOLS} -a \
-     ${jdk} -eq ${DEFAULT_JDK} ]; then
-  approve "Tagging as 'latest'..."
-  safe docker tag ${DOCKER_IMAGE}:${image_tag} ${DOCKER_IMAGE}:latest
-  if [ ${docker_push} ] ; then
-    safe docker push ${DOCKER_IMAGE}:latest
-  fi
 fi
