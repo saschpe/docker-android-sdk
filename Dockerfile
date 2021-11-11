@@ -15,9 +15,8 @@ ARG jdk=11.0.13_8
 
 FROM eclipse-temurin:${jdk}-jdk
 ARG android_api=31
-ARG android_build_tools=30.0.3
 LABEL maintainer="Sascha Peilicke <sascha@peilicke.de"
-LABEL description="Android SDK ${android_api} with build-tools ${android_build_tools} using JDK ${jdk}"
+LABEL description="Android SDK ${android_api} using JDK ${jdk}"
 
 ENV ANDROID_SDK_ROOT /opt/android-sdk-linux
 ENV PATH $PATH:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin
@@ -36,7 +35,7 @@ RUN wget --quiet  https://dl.google.com/android/repository/commandlinetools-linu
     mkdir -p /root/.android/ && touch /root/.android/repositories.cfg \
     apt-get remove wget unzip && apt-get autoremove && apt-get autoclean
 RUN yes | sdkmanager --licenses && \
-    sdkmanager --install \
-        "build-tools;${android_build_tools}" \
+    sdkmanager --update && \
+    sdkmanager --channel=2 --install \
         "platforms;android-${android_api}" \
         platform-tools

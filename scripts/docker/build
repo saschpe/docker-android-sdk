@@ -10,7 +10,6 @@ SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # Default values
 DEFAULT_ANDROID_API=$(grep android_api= "${SCRIPT_DIR}/../../Dockerfile" | cut -d"=" -f2)
-DEFAULT_ANDROID_BUILD_TOOLS=$(grep android_build_tools= "${SCRIPT_DIR}/../../Dockerfile" | cut -d"=" -f2)
 DEFAULT_JDK=$(grep jdk= "${SCRIPT_DIR}/../../Dockerfile" | cut -d"=" -f2)
 
 
@@ -28,7 +27,6 @@ function usage {
 
 # Command-line arguments
 android_api="${DEFAULT_ANDROID_API}"
-android_build_tools="${DEFAULT_ANDROID_BUILD_TOOLS}"
 jdk="${DEFAULT_JDK}"
 docker_push=
 while [[ $# -gt 0 ]] ; do
@@ -36,10 +34,6 @@ while [[ $# -gt 0 ]] ; do
   case $key in
   --android-api)
     android_api="$2"
-    shift # past argument
-    ;;
-  --android-build-tools)
-    android_build_tools="$2"
     shift # past argument
     ;;
   --jdk)
@@ -61,14 +55,16 @@ done
 
 
 # Let's roll
-image_tag=${android_api}_${android_build_tools}_jdk${jdk}
+image_tag=${android_api}_jdk${jdk}
 
-approve "Building image tag ${image_tag}..."
-safe docker build \
+if [ ${docker_push} ] ; then
+  #safe docker push ${DOCKER_IMAGE}:${image_tag}
+  buildx_command="--push"
+fi
+
+approve "Building image ${DOCKER_IMAGE}:${image_tag}"
+safe docker buildx build --platform linux/amd64,linux/arm64 \
+  ${buildx_command} \
   --build-arg android_api=${android_api} \
-  --build-arg android_build_tools=${android_build_tools} \
   --build-arg jdk=${jdk} \
   --tag ${DOCKER_IMAGE}:${image_tag} .
-if [ ${docker_push} ] ; then
-  safe docker push ${DOCKER_IMAGE}:${image_tag}
-fi

@@ -23,8 +23,7 @@ publishing.
     .
     └─── scripts
         ├── docker
-        │   ├── build           Build the container locally
-        │   └── run             Run the container locally
+        │   └── build           Build the container locally
         ├── inc.constants
         └── inc.functions
 
