@@ -11,6 +11,7 @@ SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # Default values
 DEFAULT_ANDROID_API=$(grep android_api= "${SCRIPT_DIR}/../../Dockerfile" | cut -d"=" -f2)
 DEFAULT_JDK=$(grep jdk= "${SCRIPT_DIR}/../../Dockerfile" | cut -d"=" -f2)
+DEFAULT_PLATFORMS="linux/amd64,linux/arm64"
 
 
 # Functions
@@ -18,8 +19,8 @@ function usage {
   echo -e "Usage: ${0} [OPTIONS]"
   echo -e "Options:"
   echo -e "  --android-api API_LEVEL\t(default: ${DEFAULT_ANDROID_API})"
-  echo -e "  --android-build-tools VERSION\t(default: ${DEFAULT_ANDROID_BUILD_TOOLS})"
   echo -e "  --jdk VERSION\t\t\t(default: ${DEFAULT_JDK})"
+  echo -e "  --docker-platforms\t\t(default: ${DEFAULT_PLATFORMS})"
   echo -e "  --docker-push\t\t\t(optional)"
   exit 1
 }
@@ -29,6 +30,7 @@ function usage {
 android_api="${DEFAULT_ANDROID_API}"
 jdk="${DEFAULT_JDK}"
 docker_push=
+docker_platforms="${DEFAULT_PLATFORMS}"
 while [[ $# -gt 0 ]] ; do
   key="$1"
   case $key in
@@ -38,6 +40,10 @@ while [[ $# -gt 0 ]] ; do
     ;;
   --jdk)
     jdk="$2"
+    shift # past argument
+    ;;
+  --docker-platforms)
+    docker_platforms="$2"
     shift # past argument
     ;;
   --docker-push)
@@ -61,11 +67,15 @@ if [ ${docker_push} ] ; then
   buildx_command="--push"
 fi
 
-approve "Building image ${DOCKER_IMAGE}:${image_tag}"
 docker buildx create --name temp --use
-safe docker buildx build --platform linux/amd64,linux/arm64 \
+function cleanup() {
+  docker buildx rm temp
+}
+trap cleanup EXIT
+
+approve "Building image ${DOCKER_IMAGE}:${image_tag}"
+safe docker buildx build --platform ${docker_platforms} \
   ${buildx_command} \
   --build-arg android_api=${android_api} \
   --build-arg jdk=${jdk} \
   --tag ${DOCKER_IMAGE}:${image_tag} .
-docker buildx rm temp
