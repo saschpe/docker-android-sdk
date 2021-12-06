@@ -55,16 +55,17 @@ done
 
 
 # Let's roll
-image_tag=${android_api}_jdk${jdk}
+image_tag="${android_api}-jdk${jdk}"
 
 if [ ${docker_push} ] ; then
-  #safe docker push ${DOCKER_IMAGE}:${image_tag}
   buildx_command="--push"
 fi
 
 approve "Building image ${DOCKER_IMAGE}:${image_tag}"
+docker buildx create --name temp --use
 safe docker buildx build --platform linux/amd64,linux/arm64 \
   ${buildx_command} \
   --build-arg android_api=${android_api} \
   --build-arg jdk=${jdk} \
   --tag ${DOCKER_IMAGE}:${image_tag} .
+docker buildx rm temp
