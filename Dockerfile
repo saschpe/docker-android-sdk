@@ -11,10 +11,10 @@
 #   $ ./scripts/docker/build --android-api 31
 #
 
-ARG jdk=11.0.13_8
+ARG jdk=11.0.14.1_1
 
 FROM eclipse-temurin:${jdk}-jdk
-ARG android_api=31
+ARG android_api=32
 LABEL maintainer="Sascha Peilicke <sascha@peilicke.de"
 LABEL description="Android SDK ${android_api} using JDK ${jdk}"
 
@@ -36,6 +36,6 @@ RUN wget --quiet  https://dl.google.com/android/repository/commandlinetools-linu
     apt-get remove wget unzip && apt-get autoremove && apt-get autoclean
 RUN yes | sdkmanager --licenses && \
     sdkmanager --update && \
-    sdkmanager --channel=2 --install \
+    sdkmanager --install \
         "platforms;android-${android_api}" \
         platform-tools
