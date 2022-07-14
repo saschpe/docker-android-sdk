@@ -11,7 +11,7 @@
 #   $ ./scripts/docker/build --android-api 31
 #
 
-ARG jdk=11.0.14.1_1
+ARG jdk=11.0.15_10
 
 FROM eclipse-temurin:${jdk}-jdk
 ARG android_api=32
