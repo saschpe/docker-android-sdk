@@ -11,10 +11,10 @@
 #   $ ./scripts/docker/build --android-api 31
 #
 
-ARG jdk=11.0.15_10
+ARG jdk=11.0.16_8
 
 FROM eclipse-temurin:${jdk}-jdk
-ARG android_api=32
+ARG android_api=33
 LABEL maintainer="Sascha Peilicke <sascha@peilicke.de"
 LABEL description="Android SDK ${android_api} using JDK ${jdk}"
 
