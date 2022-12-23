@@ -12,7 +12,7 @@ command-line tools and JDK 11 (or later).
 Use like you would any other base image:
 
     FROM saschpe/android-sdk
-    RUN apk add --no-cache mysql-client
+    RUN apt update && apt install -y --no-install-recommends mysql-client
     ENTRYPOINT ["mysql"]
 
 
