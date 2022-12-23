@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Script to build container image. Needs root privileges or 'docker' group
 # membership when using Docker. Prefer using Podman on Linux instead.
 
-SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+SCRIPT_DIR=$(cd -- "$(dirname -- "${0}")" && pwd)
 . "${SCRIPT_DIR}/../inc.constants"
 . "${SCRIPT_DIR}/../inc.functions"
 
@@ -15,13 +15,13 @@ DEFAULT_PLATFORMS="linux/amd64,linux/arm64"
 
 
 # Functions
-function usage {
-  echo -e "Usage: ${0} [OPTIONS]"
-  echo -e "Options:"
-  echo -e "  --android-api API_LEVEL\t(default: ${DEFAULT_ANDROID_API})"
-  echo -e "  --jdk VERSION\t\t\t(default: ${DEFAULT_JDK})"
-  echo -e "  --docker-platforms\t\t(default: ${DEFAULT_PLATFORMS})"
-  echo -e "  --docker-push\t\t\t(optional)"
+usage() {
+  printf "Usage: %s [OPTIONS]\n" "${0}"
+  printf "Options:\n"
+  printf "  --android-api API_LEVEL\t(default: %s)\n" "${DEFAULT_ANDROID_API}"
+  printf "  --jdk VERSION\t\t\t(default: %s)\n" "${DEFAULT_JDK}"
+  printf "  --docker-platforms\t\t(default: %s)\n" "${DEFAULT_PLATFORMS}"
+  printf "  --docker-push\t\t\t(optional)\n"
   exit 1
 }
 
@@ -31,7 +31,7 @@ android_api="${DEFAULT_ANDROID_API}"
 jdk="${DEFAULT_JDK}"
 docker_push=
 docker_platforms="${DEFAULT_PLATFORMS}"
-while [[ $# -gt 0 ]] ; do
+while [ $# -gt 0 ] ; do
   key="$1"
   case $key in
   --android-api)
@@ -51,7 +51,6 @@ while [[ $# -gt 0 ]] ; do
     ;;
   -h|--help)
     usage
-    shift # past argument
     ;;
   *) # unknown option
     ;;
@@ -70,9 +69,9 @@ fi
 docker buildx ls | grep -q main || safe docker buildx create --name main
 
 approve "Building image ${DOCKER_IMAGE}:${image_tag}"
-safe docker buildx build --platform ${docker_platforms} \
+safe docker buildx build --platform "${docker_platforms}" \
   ${buildx_command} \
   --builder main \
-  --build-arg android_api=${android_api} \
-  --build-arg jdk=${jdk} \
-  --tag ${DOCKER_IMAGE}:${image_tag} .
+  --build-arg android_api="${android_api}" \
+  --build-arg jdk="${jdk}" \
+  --tag "${DOCKER_IMAGE}:${image_tag}" .
