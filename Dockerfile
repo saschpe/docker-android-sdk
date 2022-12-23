@@ -11,7 +11,7 @@
 #   $ ./scripts/docker/build --android-api 31
 #
 
-ARG jdk=11.0.16_8
+ARG jdk=17.0.5_8
 
 FROM eclipse-temurin:${jdk}-jdk
 ARG android_api=33
@@ -19,7 +19,7 @@ LABEL maintainer="Sascha Peilicke <sascha@peilicke.de"
 LABEL description="Android SDK ${android_api} using JDK ${jdk}"
 
 ENV ANDROID_SDK_ROOT /opt/android-sdk-linux
-ENV PATH $PATH:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin
+ENV PATH $PATH:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/emulator
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
