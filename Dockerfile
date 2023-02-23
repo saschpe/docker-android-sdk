@@ -11,12 +11,12 @@
 #   $ ./scripts/docker/build --android-api 31
 #
 
-ARG jdk=17.0.5_8
+ARG jdk=17.0.6_10
 
 FROM eclipse-temurin:${jdk}-jdk
-ARG android_api=33
+ARG android=33
 LABEL maintainer="Sascha Peilicke <sascha@peilicke.de"
-LABEL description="Android SDK ${android_api} using JDK ${jdk}"
+LABEL description="Android SDK ${android} using JDK ${jdk}"
 
 ENV ANDROID_SDK_ROOT /opt/android-sdk-linux
 ENV PATH $PATH:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/emulator
@@ -27,15 +27,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         openssl \
         wget \
         unzip
-RUN wget --quiet  https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip -O /tmp/tools.zip && \
-    mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
-    unzip -q /tmp/tools.zip -d ${ANDROID_SDK_ROOT}/cmdline-tools && \
-    mv ${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/latest && \
-    rm -v /tmp/tools.zip && \
+RUN wget --quiet  https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O /tmp/tools.zip && \
+    unzip -q /tmp/tools.zip -d /tmp && \
+    yes | /tmp/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_SDK_ROOT} --licenses && \
+    /tmp/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_SDK_ROOT} --install "cmdline-tools;latest" && \
+    rm -r /tmp/tools.zip /tmp/cmdline-tools && \
     mkdir -p /root/.android/ && touch /root/.android/repositories.cfg \
     apt-get remove wget unzip && apt-get autoremove && apt-get autoclean
 RUN yes | sdkmanager --licenses && \
     sdkmanager --update && \
     sdkmanager --install \
-        "platforms;android-${android_api}" \
-        platform-tools
+        "platforms;android-${android}" \
+        "platform-tools"

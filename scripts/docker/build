@@ -1,55 +1,57 @@
 #!/bin/sh
 #
-# Script to build container image. Needs root privileges or 'docker' group
-# membership when using Docker. Prefer using Podman on Linux instead.
+# Script to build container image.
+#
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${0}")" && pwd)
-. "${SCRIPT_DIR}/../inc.constants"
 . "${SCRIPT_DIR}/../inc.functions"
 
-
 # Default values
-DEFAULT_ANDROID_API=$(grep android_api= "${SCRIPT_DIR}/../../Dockerfile" | cut -d"=" -f2)
+BUILDX_BUILDER_NAME=main
+DEFAULT_ANDROID=$(grep android= "${SCRIPT_DIR}/../../Dockerfile" | cut -d"=" -f2)
 DEFAULT_JDK=$(grep jdk= "${SCRIPT_DIR}/../../Dockerfile" | cut -d"=" -f2)
 DEFAULT_PLATFORMS="linux/amd64,linux/arm64"
-
 
 # Functions
 usage() {
   printf "Usage: %s [OPTIONS]\n" "${0}"
   printf "Options:\n"
-  printf "  --android-api API_LEVEL\t(default: %s)\n" "${DEFAULT_ANDROID_API}"
-  printf "  --jdk VERSION\t\t\t(default: %s)\n" "${DEFAULT_JDK}"
-  printf "  --docker-platforms\t\t(default: %s)\n" "${DEFAULT_PLATFORMS}"
-  printf "  --docker-push\t\t\t(optional)\n"
+  printf "  --android API_LEVEL (default: %s)\n" "${DEFAULT_ANDROID}"
+  printf "  --jdk VERSION       (default: %s)\n" "${DEFAULT_JDK}"
+  printf "  --platforms         (default: %s)\n" "${DEFAULT_PLATFORMS}"
+  printf "  --clean             (optional, clean up build context afterwards)\n"
+  printf "  --push              (optional, upload images to Docker Hub)\n"
   exit 1
 }
 
-
 # Command-line arguments
-android_api="${DEFAULT_ANDROID_API}"
+android="${DEFAULT_ANDROID}"
 jdk="${DEFAULT_JDK}"
-docker_push=
-docker_platforms="${DEFAULT_PLATFORMS}"
-while [ $# -gt 0 ] ; do
+platforms="${DEFAULT_PLATFORMS}"
+cmd_clean=
+cmd_push=
+while [ $# -gt 0 ]; do
   key="$1"
   case $key in
-  --android-api)
-    android_api="$2"
+  --android)
+    android="$2"
     shift # past argument
+    ;;
+  --clean)
+    cmd_clean=true
     ;;
   --jdk)
     jdk="$2"
     shift # past argument
     ;;
-  --docker-platforms)
-    docker_platforms="$2"
+  --platforms)
+    platforms="$2"
     shift # past argument
     ;;
-  --docker-push)
-    docker_push=true
+  --push)
+    cmd_push=true
     ;;
-  -h|--help)
+  -h | --help)
     usage
     ;;
   *) # unknown option
@@ -58,20 +60,36 @@ while [ $# -gt 0 ] ; do
   shift # past argument or value
 done
 
-
 # Let's roll
-image_tag="${android_api}-jdk${jdk}"
+image_tag="saschpe/android-sdk:${android}-jdk${jdk}"
 
-if [ ${docker_push} ] ; then
-  buildx_command="--push"
+if [ ${cmd_clean} ]; then
+  cleanup() {
+    if docker buildx ls | grep -q ${BUILDX_BUILDER_NAME}; then
+      approve "Remove buildx builder '${BUILDX_BUILDER_NAME}'"
+      safe docker buildx rm ${BUILDX_BUILDER_NAME}
+    fi
+  }
+  trap cleanup EXIT
 fi
 
-docker buildx ls | grep -q main || safe docker buildx create --name main
+if ! docker buildx ls | grep -q ${BUILDX_BUILDER_NAME}; then
+  approve "Create buildx builder '${BUILDX_BUILDER_NAME}'"
+  safe docker buildx create --name ${BUILDX_BUILDER_NAME}
+fi
 
-approve "Building image ${DOCKER_IMAGE}:${image_tag}"
-safe docker buildx build --platform "${docker_platforms}" \
+if [ ${cmd_push} ]; then
+  approve "Build and push image '${image_tag}'"
+  buildx_command="--push"
+else
+  approve "Build image '${image_tag}'"
+fi
+
+safe docker buildx build \
+  --platform "${platforms}" \
   ${buildx_command} \
-  --builder main \
-  --build-arg android_api="${android_api}" \
+  --builder ${BUILDX_BUILDER_NAME} \
+  --build-arg android="${android}" \
   --build-arg jdk="${jdk}" \
-  --tag "${DOCKER_IMAGE}:${image_tag}" .
+  --tag "${image_tag}" \
+  .

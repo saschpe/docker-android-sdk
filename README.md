@@ -1,4 +1,5 @@
 # Android SDK OCI / Docker image
+
 ![GitHub License](https://img.shields.io/github/license/saschpe/docker-android-sdk)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/saschpe/docker-android-sdk/CI)
 ![Docker Automated build](https://img.shields.io/docker/automated/saschpe/android-sdk)
@@ -7,26 +8,26 @@
 Android SDK OCI container image with pre-installed build-tools based on latest
 command-line tools and JDK 11 (or later).
 
-
 ## Usage
+
 Use like you would any other base image:
 
-    FROM saschpe/android-sdk
-    RUN apt update && apt install -y --no-install-recommends mysql-client
-    ENTRYPOINT ["mysql"]
-
+```Dockerfile
+FROM saschpe/android-sdk
+RUN sdkmanager --install emulator
+```
 
 ## Scripts
+
 These scripts simplify various tasks related to container building and
 publishing.
 
     .
     └─── scripts
-        ├── docker
-        │   └── build           Build the container locally
-        ├── inc.constants
-        └── inc.functions
-
+     ├── docker
+     │ └── build           Build the container locally
+     ├── inc.constants
+     └── inc.functions
 
 ## License
 
