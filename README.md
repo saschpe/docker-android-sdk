@@ -17,17 +17,14 @@ FROM saschpe/android-sdk
 RUN sdkmanager --install emulator
 ```
 
-## Scripts
+## Building
 
 These scripts simplify various tasks related to container building and
-publishing.
+publishing:
 
-    .
-    └─── scripts
-     ├── docker
-     │ └── build           Build the container locally
-     ├── inc.constants
-     └── inc.functions
+```shell
+./scripts/build --help
+```
 
 ## License
 

@@ -4,11 +4,11 @@
 # Contains JDK, Android SDK and Android Build Tools. Each version is
 # configurable. Build and publish with default arguments:
 #
-#   $ ./scripts/docker/build --docker-push
+#   $ ./scripts/build --push
 #
 # Build with custom arguments:
 #
-#   $ ./scripts/docker/build --android-api 31
+#   $ ./scripts/build --android 33 --jdk 17.0.6_10
 #
 
 ARG jdk=17.0.6_10

@@ -5,7 +5,7 @@
 
 for android in ${ANDROID_API[*]}; do
   for jdk in ${JDK[*]}; do
-    ./scripts/docker/build \
+    ./scripts/build \
       --android "${android}" \
       --jdk "${jdk}" \
       --push
