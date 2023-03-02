@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  IMAGE: ${{ github.repository }}
+  IMAGE: saschpe/android-sdk
   PLATFORMS: linux/amd64,linux/arm64
 
 jobs:
@@ -74,3 +74,4 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: ${{ env.IMAGE }}
+          short-description: ${{ github.event.repository.description }}
