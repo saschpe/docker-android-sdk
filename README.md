@@ -1,9 +1,9 @@
 # Android SDK OCI / Docker image
 
-![GitHub License](https://img.shields.io/github/license/saschpe/docker-android-sdk)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/saschpe/docker-android-sdk/CI)
-![Docker Automated build](https://img.shields.io/docker/automated/saschpe/android-sdk)
-![Docker Pulls](https://img.shields.io/docker/pulls/saschpe/android-sdk)
+[![License](https://img.shields.io/github/license/saschpe/docker-android-sdk)](https://opensource.org/licenses/Apache-2.0)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/saschpe/docker-android-sdk/ci.yml?branch=main)](https://github.com/saschpe/docker-android-sdk/actions?query=branch%3Amain++)
+[![Docker Pulls](https://img.shields.io/docker/pulls/saschpe/android-sdk)](https://hub.docker.com/r/saschpe/android-sdk)
+[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/saschpe/android-sdk)](https://hub.docker.com/r/saschpe/android-sdk)
 
 Android SDK OCI container image with pre-installed build-tools based on latest
 command-line tools and JDK 11 (or later).
