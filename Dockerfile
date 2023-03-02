@@ -35,8 +35,7 @@ RUN wget --quiet  https://dl.google.com/android/repository/commandlinetools-linu
     rm -r /tmp/tools.zip /tmp/cmdline-tools && \
     mkdir -p /root/.android/ && touch /root/.android/repositories.cfg \
     apt-get remove wget unzip && apt-get autoremove && apt-get autoclean
-RUN yes | sdkmanager --licenses && \
-    sdkmanager --update && \
+RUN yes | sdkmanager --licenses >/dev/null && \
     sdkmanager --install \
         "platforms;android-${android}" \
         "platform-tools"
