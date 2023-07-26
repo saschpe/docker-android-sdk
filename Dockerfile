@@ -8,10 +8,10 @@
 #
 # Build with custom arguments:
 #
-#   $ ./scripts/build --android 33 --jdk 17.0.7_7
+#   $ ./scripts/build --android 33 --jdk 17.0.8_7
 #
 
-ARG jdk=17.0.7_7
+ARG jdk=17.0.8_7
 
 FROM eclipse-temurin:${jdk}-jdk
 ARG android=33
