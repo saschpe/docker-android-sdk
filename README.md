@@ -5,19 +5,21 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/saschpe/android-sdk)](https://hub.docker.com/r/saschpe/android-sdk)
 [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/saschpe/android-sdk)](https://hub.docker.com/r/saschpe/android-sdk)
 
-Android SDK OCI container image with pre-installed build-tools based on the latest
+Android SDK OCI container image with pre-installed build-tools based on the
+latest
 command-line tools and JDK 11 or later.
 
 ## Android SDK and JDK support
 
-The following JDK and Android SDK API level combinations are currently supported:
+The following JDK and Android SDK API level combinations are currently
+available:
 
-|    | 11.0 | 17.0 |
-|----|------|------|
-| 31 | ✅   | ✅   |
-| 32 | ✅   | ✅   |
-| 33 | ✅   | ✅   |
-| 34 | ✅   | ✅   |
+|    | 11.0 | 17.0 | 21.0 |
+|----|------|------|------|
+| 31 | ✅    | ✅    |      |
+| 32 | ✅    | ✅    | ✅    |
+| 33 | ✅    | ✅    | ✅    |
+| 34 | ✅    | ✅    | ✅    |
 
 ## Usage
 
