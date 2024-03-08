@@ -8,13 +8,13 @@
 #
 # Build with custom arguments:
 #
-#   $ ./scripts/build --android 33 --jdk 17.0.8_7
+#   $ ./scripts/build --android 34 --jdk 17.0.10_7
 #
 
-ARG jdk=17.0.8_7
+ARG jdk=17.0.10_7
 
 FROM eclipse-temurin:${jdk}-jdk
-ARG android=33
+ARG android=34
 LABEL maintainer="Sascha Peilicke <sascha@peilicke.de"
 LABEL description="Android SDK ${android} using JDK ${jdk}"
 
