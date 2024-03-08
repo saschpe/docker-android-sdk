@@ -26,8 +26,8 @@ jobs:
     strategy:
       max-parallel: 3
       matrix:
-        jdk: [ 11.0.20_8, 17.0.10_7 ]
-        android: [ 31, 32, 33, 34 ]
+        jdk: [ 17.0.10_7, 21.0.2_13 ]
+        android: [ 32, 33, 34 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3

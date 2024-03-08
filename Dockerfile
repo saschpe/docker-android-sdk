@@ -26,15 +26,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         git-lfs \
         gnupg \
         openssl \
-        unzip \
-        wget
-RUN wget --quiet  https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O /tmp/tools.zip && \
+        unzip
+RUN curl -s https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -o /tmp/tools.zip && \
     unzip -q /tmp/tools.zip -d /tmp && \
     yes | /tmp/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_SDK_ROOT} --licenses && \
     /tmp/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_SDK_ROOT} --install "cmdline-tools;latest" && \
     rm -r /tmp/tools.zip /tmp/cmdline-tools && \
-    mkdir -p /root/.android/ && touch /root/.android/repositories.cfg \
-    apt-get remove wget unzip && apt-get autoremove && apt-get autoclean
+    mkdir -p /root/.android/ && touch /root/.android/repositories.cfg
 RUN yes | sdkmanager --licenses >/dev/null && \
     sdkmanager --install \
         "platforms;android-${android}" \
