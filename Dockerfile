@@ -8,10 +8,10 @@
 #
 # Build with custom arguments:
 #
-#   $ ./scripts/build --android 34 --jdk 17.0.10_7
+#   $ ./scripts/build --android 34 --jdk 22.0.1_8
 #
 
-ARG jdk=17.0.10_7
+ARG jdk=22.0.1_8
 
 FROM eclipse-temurin:${jdk}-jdk
 ARG android=34
@@ -22,6 +22,7 @@ ENV ANDROID_SDK_ROOT /opt/android-sdk-linux
 ENV PATH $PATH:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/emulator
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+        curl \
         git \
         git-lfs \
         gnupg \
