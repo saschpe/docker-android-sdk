@@ -11,15 +11,16 @@
 #   $ ./scripts/build --android 34 --jdk 22.0.1_8
 #
 
-ARG jdk=22.0.1_8
+ARG jdk=22.0.2_9
 
 FROM eclipse-temurin:${jdk}-jdk
-ARG android=34
+ARG android=35
+ARG jdk
 LABEL maintainer="Sascha Peilicke <sascha@peilicke.de"
 LABEL description="Android SDK ${android} using JDK ${jdk}"
 
-ENV ANDROID_SDK_ROOT /opt/android-sdk-linux
-ENV PATH $PATH:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/emulator
+ENV ANDROID_SDK_ROOT=/opt/android-sdk-linux
+ENV PATH=$PATH:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/emulator
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         curl \
