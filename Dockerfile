@@ -31,12 +31,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         unzip
 RUN curl -s https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -o /tmp/tools.zip && \
     unzip -q /tmp/tools.zip -d /tmp && \
-    yes | /tmp/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_SDK_ROOT} --licenses && \
-    /tmp/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_SDK_ROOT} --install "cmdline-tools;latest" && \
-    rm -r /tmp/tools.zip /tmp/cmdline-tools && \
-    mkdir -p /root/.android/ && touch /root/.android/repositories.cfg
-RUN yes | sdkmanager --licenses >/dev/null && \
-    sdkmanager --install \
+    yes | /tmp/cmdline-tools/bin/sdkmanager --sdk_root="${ANDROID_SDK_ROOT}" --licenses && \
+    /tmp/cmdline-tools/bin/sdkmanager --sdk_root="${ANDROID_SDK_ROOT}" --install "cmdline-tools;latest" && \
+    rm -r /tmp/tools.zip /tmp/cmdline-tools
+RUN adduser nonroot && chown nonroot:nonroot -R "${ANDROID_SDK_ROOT}"
+USER nonroot
+RUN mkdir -p /home/nonroot/.android/ && touch /home/nonroot/.android/repositories.cfg
+RUN yes | sdkmanager --licenses >/dev/null && sdkmanager --install \
         "platforms;android-${android}" \
         "platform-tools"
-USER nonroot
