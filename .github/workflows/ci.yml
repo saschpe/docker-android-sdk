@@ -68,7 +68,8 @@ jobs:
           build-args: |
             jdk=${{ matrix.jdk }} 
             android=${{ matrix.android }}
-          provenance: true
+          provenance: ${{ github.event_name != 'pull_request' }}
+          sbom: ${{ github.event_name != 'pull_request' }}
           cache-from: type=registry,ref=user/app:latest
           cache-to: type=inline
       - name: Update Docker Hub repository description
