@@ -19,6 +19,7 @@ usage() {
   printf "  --jdk VERSION       (default: %s)\n" "${DEFAULT_JDK}"
   printf "  --platforms         (default: %s)\n" "${DEFAULT_PLATFORMS}"
   printf "  --push              (optional, upload images to Docker Hub)\n"
+  printf "  --verbose           (optional)\n"
   exit 1
 }
 
@@ -27,6 +28,7 @@ android="${DEFAULT_ANDROID}"
 jdk="${DEFAULT_JDK}"
 platforms="${DEFAULT_PLATFORMS}"
 cmd_push=
+docker_progress=auto
 while [ $# -gt 0 ]; do
   key="$1"
   case $key in
@@ -44,6 +46,9 @@ while [ $# -gt 0 ]; do
     ;;
   --push)
     cmd_push=true
+    ;;
+  --verbose)
+    docker_progress=plain
     ;;
   -h | --help)
     usage
@@ -70,4 +75,5 @@ safe docker build \
   --build-arg android="${android}" \
   --build-arg jdk="${jdk}" \
   --tag "${image_tag}" \
+  --progress "${docker_progress}" \
   .
