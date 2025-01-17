@@ -39,3 +39,4 @@ RUN yes | sdkmanager --licenses >/dev/null && \
     sdkmanager --install \
         "platforms;android-${android}" \
         "platform-tools"
+USER nonroot
