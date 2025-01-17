@@ -8,7 +8,7 @@
 #
 # Build with custom arguments:
 #
-#   $ ./scripts/build --android 34 --jdk 22.0.1_8
+#   $ ./scripts/build --android 34 --jdk 22.0.2_9
 #
 
 ARG jdk=22.0.2_9
@@ -39,3 +39,4 @@ RUN yes | sdkmanager --licenses >/dev/null && \
     sdkmanager --install \
         "platforms;android-${android}" \
         "platform-tools"
+USER nonroot
