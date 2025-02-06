@@ -24,10 +24,14 @@ available:
 
 ## Usage
 
-Use like you would any other base image:
+```shell
+docker pull saschpe/android-sdk:35-jdk21.0.6_7
+```
+
+Use as a base image:
 
 ```Dockerfile
-FROM saschpe/android-sdk
+FROM saschpe/android-sdk:35-jdk21.0.6_7
 RUN sdkmanager --install emulator
 ```
 
