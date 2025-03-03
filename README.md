@@ -14,24 +14,24 @@ command-line tools and JDK 11 or later.
 The following JDK and Android SDK API level combinations are currently
 available:
 
-|    | 11 | 17 | 21 | 22 |
-|----|----|----|----|----|
-| 31 | ✅  | ✅  |    |    |
-| 32 | ✅  | ✅  | ✅  | ✅  |
-| 33 | ✅  | ✅  | ✅  | ✅  |
-| 34 | ✅  | ✅  | ✅  | ✅  |
-| 35 |    | ✅  | ✅  | ✅  |
+|    | 11 | 17 | 21 | 22 | 23 |
+|----|----|----|----|----|----|
+| 31 | ✅  | ✅  |    |    |    |
+| 32 | ✅  | ✅  | ✅  | ✅  |    |
+| 33 | ✅  | ✅  | ✅  | ✅  |    | 
+| 34 | ✅  | ✅  | ✅  | ✅  | ✅  | 
+| 35 |    | ✅  | ✅  | ✅  | ✅  |
 
 ## Usage
 
 ```shell
-docker pull saschpe/android-sdk:35-jdk21.0.6_7
+docker pull saschpe/android-sdk:35-jdk23.0.2_7
 ```
 
 Use as a base image:
 
 ```Dockerfile
-FROM saschpe/android-sdk:35-jdk21.0.6_7
+FROM saschpe/android-sdk:35-jdk23.0.2_7
 RUN sdkmanager --install emulator
 ```
 

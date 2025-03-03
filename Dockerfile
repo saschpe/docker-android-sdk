@@ -8,10 +8,10 @@
 #
 # Build with custom arguments:
 #
-#   $ ./scripts/build --android 34 --jdk 22.0.2_9
+#   $ ./scripts/build --android 34 --jdk 23.0.2_7
 #
 
-ARG jdk=22.0.2_9
+ARG jdk=23.0.2_7
 
 FROM eclipse-temurin:${jdk}-jdk
 ARG android=35
