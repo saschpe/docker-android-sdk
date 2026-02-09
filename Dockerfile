@@ -11,10 +11,10 @@
 #   $ ./scripts/build --android 34 --jdk 23.0.2_7
 #
 
-ARG jdk=23.0.2_7
+ARG jdk=25.0.2_10
 
 FROM eclipse-temurin:${jdk}-jdk
-ARG android=35
+ARG android=36
 ARG jdk
 LABEL maintainer="Sascha Peilicke <sascha@peilicke.de"
 LABEL description="Android SDK ${android} using JDK ${jdk}"
@@ -25,7 +25,6 @@ ENV PATH=$PATH:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/
 RUN apt-get update && apt-get install -y --no-install-recommends \
         curl \
         git \
-        git-lfs \
         gnupg \
         openssl \
         unzip
