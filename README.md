@@ -1,7 +1,7 @@
 # Android SDK OCI / Docker image
 
 [![License](https://img.shields.io/github/license/saschpe/docker-android-sdk)](https://opensource.org/licenses/Apache-2.0)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/saschpe/docker-android-sdk/ci.yml?branch=main)](https://github.com/saschpe/docker-android-sdk/actions?query=branch%3Amain++)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/saschpe/docker-android-sdk/main.yml?branch=main)](https://github.com/saschpe/docker-android-sdk/actions?query=branch%3Amain++)
 [![Docker Pulls](https://img.shields.io/docker/pulls/saschpe/android-sdk)](https://hub.docker.com/r/saschpe/android-sdk)
 [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/saschpe/android-sdk)](https://hub.docker.com/r/saschpe/android-sdk)
 
