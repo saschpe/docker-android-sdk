@@ -24,7 +24,7 @@ ENV PATH=$PATH:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         curl git gnupg openssl unzip \
-    && curl -s https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -o /tmp/tools.zip \
+    && curl -s https://dl.google.com/android/repository/commandlinetools-linux-14742923_latest.zip -o /tmp/tools.zip \
     && unzip -q /tmp/tools.zip -d /tmp \
     && yes | /tmp/cmdline-tools/bin/sdkmanager --sdk_root="${ANDROID_SDK_ROOT}" --licenses \
     && /tmp/cmdline-tools/bin/sdkmanager --sdk_root="${ANDROID_SDK_ROOT}" --install "cmdline-tools;latest" \

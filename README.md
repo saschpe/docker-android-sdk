@@ -14,25 +14,27 @@ command-line tools and JDK 11 or later.
 The following JDK and Android SDK API level combinations are currently
 available:
 
-|    | 11 | 17 | 21 | 22 | 23 | 25 |
-|----|----|----|----|----|----|----|
-| 31 | ✅  | ✅  |    |    |    |    |
-| 32 | ✅  | ✅  | ✅  | ✅  |    |    |
-| 33 | ✅  | ✅  | ✅  | ✅  |    |    |
-| 34 | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
-| 35 |    | ✅  | ✅  |    | ✅  | ✅  |
-| 36 |    | ✅  | ✅  |    | ✅  | ✅  |
+|      | 11 | 17 | 21 | 22 | 23 | 25 |
+|------|----|----|----|----|----|----|
+| 31   | ✅  | ✅  |    |    |    |    |
+| 32   | ✅  | ✅  | ✅  | ✅  |    |    |
+| 33   | ✅  | ✅  | ✅  | ✅  |    |    |
+| 34   | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
+| 35   |    | ✅  | ✅  |    | ✅  | ✅  |
+| 36   |    | ✅  | ✅  |    | ✅  | ✅  |
+| 36.1 |    | ✅  | ✅  |    | ✅  | ✅  |
+| 37.0 |    | ✅  | ✅  |    | ✅  | ✅  |
 
 ## Usage
 
 ```shell
-docker pull saschpe/android-sdk:35-jdk23.0.2_7
+docker pull saschpe/android-sdk:37.0-jdk23.0.2_7
 ```
 
 Use as a base image:
 
 ```Dockerfile
-FROM saschpe/android-sdk:35-jdk23.0.2_7
+FROM saschpe/android-sdk:36.1-jdk23.0.2_7
 RUN sdkmanager --install emulator
 ```
 
