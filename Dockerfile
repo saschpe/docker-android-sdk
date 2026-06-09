@@ -11,7 +11,7 @@
 #   $ ./scripts/build --android 34 --jdk 23.0.2_7
 #
 
-ARG jdk=25.0.2_10
+ARG jdk=25.0.3_9
 
 FROM eclipse-temurin:${jdk}-jdk
 ARG android=36

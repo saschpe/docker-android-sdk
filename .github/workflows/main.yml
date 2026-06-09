@@ -29,7 +29,7 @@ jobs:
     strategy:
       max-parallel: 3
       matrix:
-        jdk: [ 17.0.18_8, 21.0.10_7, 23.0.2_7, 25.0.2_10 ]
+        jdk: [ 17.0.19_10, 21.0.11_10, 23.0.2_7, 25.0.3_9 ]
         android: [ 34, 35, 36, 36.1, "37.0" ]
     permissions:
       packages: write
