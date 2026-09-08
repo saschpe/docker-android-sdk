@@ -16,26 +16,28 @@ available:
 
 |      | 11 | 17 | 21 | 22 | 23 | 25 |
 |------|----|----|----|----|----|----|
-| 31   | ✅  | ✅  |    |    |    |    |
-| 32   | ✅  | ✅  | ✅  | ✅  |    |    |
-| 33   | ✅  | ✅  | ✅  | ✅  |    |    |
-| 34   | ✅  | ✅  | ✅  | ✅  | ✅  | ✅  |
-| 35   |    | ✅  | ✅  |    | ✅  | ✅  |
-| 36   |    | ✅  | ✅  |    | ✅  | ✅  |
-| 36.1 |    | ✅  | ✅  |    | ✅  | ✅  |
-| 37.0 |    | ✅  | ✅  |    | ✅  | ✅  |
+| 31   | ✅ | ✅ |    |    |    |    |
+| 32   | ✅ | ✅ | ✅ | ✅ |    |    |
+| 33   | ✅ | ✅ | ✅ | ✅ |    |    |
+| 34   | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 35   |    | ✅ | ✅ |    | ✅ | ✅ |
+| 36   |    | ✅ | ✅ |    | ✅ | ✅ |
+| 36.1 |    | ✅ | ✅ |    | ✅ | ✅ |
+| 37.0 |    | ✅ | ✅ |    | ✅ | ✅ |
+| 37.1 |    | ✅ | ✅ |    | ✅ | ✅ |
+| 37.2 |    | ✅ | ✅ |    | ✅ | ✅ |
 
 ## Usage
 
 ```shell
-docker pull saschpe/android-sdk:37.0-jdk23.0.2_7
+docker pull saschpe/android-sdk:37.2-jdk25.0.4_7
 ```
 
 Use as a base image:
 
 ```Dockerfile
-FROM saschpe/android-sdk:36.1-jdk23.0.2_7
-RUN sdkmanager --install emulator
+FROM saschpe/android-sdk:37.2-jdk25.0.4_7
+RUN android sdk install emulator
 ```
 
 ## Building
